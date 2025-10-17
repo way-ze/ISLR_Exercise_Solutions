@@ -1,14 +1,14 @@
 ---
 title: "ISLR Exercise 3.7.9"
-format: html
+format:
+  html:
+    embed-resources: true # <--- Place it here
 editor: visual
 ---
 
 ## 9 This question involves the use of multiple linear regression on the Auto data set.
 
 ### a) Produce a scatterplot matrix which includes all of the variables in the data set.
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
 library(ISLR2)
