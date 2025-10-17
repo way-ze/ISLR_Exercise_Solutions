@@ -1,0 +1,62 @@
+---
+title: "ISLR Exercise 3.7.9"
+format: html
+editor: visual
+---
+
+## 9 This question involves the use of multiple linear regression on the Auto data set.
+
+### a) Produce a scatterplot matrix which includes all of the variables in the data set.
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+library(ISLR2)
+attach(Auto)
+pairs(Auto)
+```
+
+### b) Compute the matrix of correlations between the variables using the function `cor()`. You will need to exclude the `name` variable, `cor()` which is qualitative.
+
+```{r}
+Auto_noname <- subset(Auto, select=-name) 
+cor(Auto_noname)
+```
+
+### c) Use the `lm()` function to perform a multiple linear regression with `mpg` as the response and all other variables except `name` as the predictors. Use the `summary()` function to print the results. Comment on the output.
+
+```{r}
+fit1 <- lm(mpg ~ . - name, data=Auto)
+summary(fit1)
+```
+
+#### i) Is there a relationship between the predictors and the response?
+
+Yes? For example, we see that the p values for the intercept, `displacement`, `weight`, `year` and `origin` are significant. The rest not really. The R squared is high:
+
+```{r}
+summary(fit1)$r.squared # = 0.821
+```
+
+#### ii) Which predictors appear to have a statistically significant relationship to the response
+
+I responded here above.
+
+#### iii) What does the coefficient for the `year` variable suggest?
+
+```{r}
+coefficients(fit1)[7] # = 0.7507727
+```
+
+This suggests the newer the car, the higher the `mpg`.
+
+### d) Use `plot()` function to produce diagn. plots of the linear regression fit. What do you notice.
+
+```{r}
+par(mfrow=c(2,2))
+plot(fit1)
+```
+
+If you look at the residuals vs leverage plot, you see how the point 14 is completely screwed. Highish negative residual but strong positive leverage (cook's distance).. There are some larger outliers (points 327 and 394).
+
+### e) Use `*` and `:` to fit linear regression models with interaction effects.
