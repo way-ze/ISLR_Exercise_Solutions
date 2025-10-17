@@ -1,8 +1,7 @@
 ---
 title: "ISLR Exercise 3.7.9"
 format:
-  html:
-    embed-resources: true # <--- Place it here
+  pdf: default
 editor: visual
 ---
 

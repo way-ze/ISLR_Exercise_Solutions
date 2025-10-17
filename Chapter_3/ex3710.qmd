@@ -1,0 +1,72 @@
+---
+title: "ISL Exercise 3.7.10"
+format: pdf
+editor: visual
+---
+
+## Exercise 3.7.10
+
+This question should be answered using the `Carseats` dataset.
+
+### a) Fit a multiple regression model to predit `Sales` using `Price`, `Urban` and `US`
+
+Let's have a look at the dataset first:
+
+```{r}
+library(ISLR2)
+attach(Carseats)
+?Carseats
+
+fit1 <- lm(Sales ~ Price + Urban + US, data=Carseats)
+```
+
+### b) Provide an interpretation of each coefficient in the model. Be careful, some of the variables in the model are qualitative!
+
+```{r}
+summary(fit1)
+```
+
+What we see first is that the variables `Urban` and `US` are both qualitative, the first representing whether the store is in an urban or rural location, and the second indicating whether the store was in the US or not.
+
+The `Price` coefficient being slightly negative suggests that higher prices have a mildly negative effect on the unit sales.
+
+The `UrbanYes` coefficient being close to 0 suggests that it has little to no effect, which is supported by the high p-value.
+
+The `USYes` coefficient being close to 1 with a small p-value suggests that US locations have a higher chance of selling more car seats.
+
+### c) Write out the model in equation form, being careful to handle the qualitiative variables properly.
+
+$Sales = \beta_0 + \beta_1 Price + \beta_2 UrbanYes + \beta_3 USYes$, where
+$$
+UrbanYes = \begin{cases} 1 & \text{if urban location} \\ 0 & \text{if rural location}\end{cases}
+$$
+and US yes is similarly encoded as a dummy variable.
+
+### d) For which of the predictors can you reject the null hypothesis $H_0: \beta_j = 0$?
+As mentioned above, `UrbanYes`.
+
+### e) On the basis of your response to the previous question, fit a smaller model that only uses the predictors for which there is evidence of association with the outcome.
+
+```{r}
+fit2 <- lm(Sales ~ Price + US, data=Carseats)
+```
+
+### f) How well do the models in a) and e) fit the data
+```{r}
+# We should check the r2 coefficients of both models
+summary(fit1)$r.squared
+summary(fit2)$r.squared
+```
+Seems both are terrible.
+
+### g) Using the model from e) give confidence intervals
+```{r}
+confint(fit2)
+```
+
+### f) Are there any high-leverage points?
+```{r}
+par(mfrow=c(2,2))
+plot(fit2)
+```
+Yes there's a really obvious one on the bottom right. Consider removing it.
