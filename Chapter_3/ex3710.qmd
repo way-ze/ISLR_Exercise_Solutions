@@ -1,5 +1,5 @@
 ---
-title: "ISL Exercise 3.7.10"
+title: "ISLR Exercise 3.7.10"
 format: pdf
 editor: visual
 ---
